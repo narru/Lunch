@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+
+
+
+
+    public function getprofile(){
+
+        return view('employee.show'); 
+
+    }
     /**
      * Display a listing of the resource.
      *

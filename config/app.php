@@ -125,7 +125,11 @@ return [
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
+        /*
+        * This is for broadcasting...... 
+        */
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
+
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,

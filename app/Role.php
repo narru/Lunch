@@ -10,4 +10,10 @@ class Role extends LaratrustRole
     {
         return $this->belongsToMany('App\User', 'role_user');
     }
+     public function attachRole($role)
+    {
+        return $this->roles()->sync(
+            [Role::whereName($role)->firstOrFail()->id]
+        );
+    }
 }

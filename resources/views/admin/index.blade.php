@@ -11,7 +11,7 @@
                 <th>Employee</th>
             </tr>
              @foreach($orders as $order)
-            <tr>
+            <tr> 
                 <td>{{ $order->id }}</td>
                 <td>
                     @foreach($order->items as $item)
@@ -21,8 +21,14 @@
                 <td>{{ $order->user->name }}</td>
                 
             </tr>
+
             @endforeach
         </table>
+        <div class="row">
+            <div class="col-md-12 ">
+                {{ $orders->links() }}
+            </div>
+        </div>
     </div>
 
     <div class="row pt-5">

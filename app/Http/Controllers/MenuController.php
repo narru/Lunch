@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\Menu;
+use App\User;
 use Carbon\Carbon;
+use App\Chef;
+use Notification;
+use App\Notifications\MakeOrder;
 use Illuminate\Http\Request;
 
 
@@ -33,6 +37,8 @@ class MenuController extends Controller
             return back()->with('message', 'You have already Created todays menu');
         }
         $items = Item::all();
+        // Here we start a notification
+        
         return view('chef.menu.create', compact('items'));
     }
 
@@ -56,7 +62,11 @@ class MenuController extends Controller
         $menu->save();
         $menu->items()->sync($request->items);
 
-        return redirect()->route('menu.index');
+        Notification::route('mail', 'narruchaudhary@gmail.com')->notify(new MakeOrder($menu));
+        
+        $notification = array('message'=>'Menu Updated Successfully!', 'alert-type'=>'success');
+
+        return redirect()->route('menu.index')->with($notification);
     }
 
     /**
@@ -81,7 +91,10 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menu_items = $menu->items->keyBy('id');
         $items = Item::all();
-        return view('chef.menu.edit', compact('menu', 'items', 'menu_items'));
+
+        $notification = array('message'=>'Menu Updated Successfully!', 'alert-type'=>'success');
+
+        return view('chef.menu.edit', compact('menu', 'items', 'menu_items'))->with($notification);
     }
 
     /**
@@ -101,7 +114,9 @@ class MenuController extends Controller
         $menu->items()->sync($request->items);
         $menu->save();
 
-        return redirect()->route('menu.index');
+        $notification = array('message'=>'Menu Edited!', 'alert-type'=>'info');        
+
+        return redirect()->route('menu.index')->with($notification);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\Order;
 use App\Menu;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -32,7 +33,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::paginate(5);
         $menu = Menu::with('items')->get();
         return view('admin.index', compact('orders','menu'));
     }
@@ -66,7 +67,8 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $admin = User::findOrFail($id);
+        return view('admin.show',compact('admin'));
     }
 
     /**
@@ -77,7 +79,8 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.edit', compact('user'));
     }
 
     /**
@@ -89,7 +92,20 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:3|max:256',
+            'email' => 'required|email|unique:users' 
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $user->save();
+
+        $notification = array('message'=>'Profile Updated Successfully!', 'alert-type'=>'success');
+
+        return back()->with($notification);
     }
 
     /**

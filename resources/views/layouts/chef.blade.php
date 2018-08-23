@@ -16,11 +16,14 @@
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
+    {{-- CDN for making the notification --}}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
     @yield('styles')
 </head>
 <body>
     <div id="app">
-        @include('layouts.partials.navbar.staff')
+        @include('layouts.partials.navbar.chef')
         <div class="container-fluid">
             <div class="row">
                 @include('layouts.partials.sidebar.chef')
@@ -33,6 +36,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @yield('scripts')
+    @include('layouts.notification')
 </body>
 </html>

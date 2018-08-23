@@ -18,13 +18,17 @@
                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
             </li>
             @else
+            <li class="nav-item">
+                <a href="#" class="nav-link">Notification  <i class="fa fa-bell" aria-hidden="true"></i></a>
+            </li>
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
-
+                    
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    {{-- <a href="{{ route('chef.show', auth()->user()->id ) }}" class="dropdown-item">Profile</a> --}}
+
+                     <a href="{{ route('empprofile.show', auth()->user()->id) }}" class="dropdown-item">Profile</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

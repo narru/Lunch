@@ -48,8 +48,10 @@ class ItemController extends Controller
         $item->description = $request->description;
         $item->category_id = $request->category;
         $item->save();
+           
+        $notification = array('message'=>'Item added Successfully!', 'alert-type'=>'success');
 
-        return redirect()->route('item.show', $item->id);
+        return redirect()->route('item.show', $item->id)->with($notification);
     }
 
     /**
@@ -99,7 +101,8 @@ class ItemController extends Controller
         $item->category_id = $request->category;
         $item->save();
 
-        return redirect()->route('item.show', $item->id);
+        $notification = array('message'=>'Item updated Successfully!', 'alert-type'=>'info');
+        return redirect()->route('item.show', $item->id)->with($notification);
     }
 
     /**

@@ -4122,8 +4122,8 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
-  -webkit-box-shadow: 0 0 0 1px #f5f8fa, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-          box-shadow: 0 0 0 1px #f5f8fa, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  -webkit-box-shadow: 0 0 0 1px #f5f8fa, 0 0 0 0.2rem rgba(208, 0, 251, 0.9);
+          box-shadow: 0 0 0 1px #f5f8fa, 0 0 0 0.2rem rgba(208, 0, 251, 0.9);
 }
 
 .custom-control-input:active ~ .custom-control-label::before {

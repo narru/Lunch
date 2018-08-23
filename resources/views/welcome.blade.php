@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -21,6 +21,7 @@
         body{
             background-color: #5BFFCE;
         }
+        
     </style>
 </head>
 <body>
@@ -29,14 +30,18 @@
             <div class="row justify-content-center">
                 <div class="col-md-6 pt-5">
                     <div class="card">
-                        <div class="card-header text-center h4">{{ __('Lunch Hour Management') }}</div>
+                        <div class="card-header text-center h4 text-teal" style="background-color: white;">{{ __('Lunch Hour Management') }}</div>
 
                         <div class="card-body">
+
+                        
+
+
                             <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                                 @csrf
 
                                 <div class="form-group">
-                                    <label>{{ __('E-Mail Address') }}</label>
+                                    <label>{{ __('Email') }}</label>
                                         <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
                                         @if ($errors->has('email'))
@@ -75,7 +80,11 @@
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             {{ __('Forgot Your Password?') }}
                                         </a>
+
+
                                 </div>
+
+                                <a href="{{ route('register') }}" class="btn btn-info">Employee Sign-up</a>
                             </form>
                         </div>
                     </div>
@@ -85,3 +94,7 @@
     </div>
 </body>
 </html>
+
+
+
+

@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Menu;
 use App\Order;
+use App\User;
+use App\Chef;
+use Notification;
+use App\Notifications\OrderCompleted;
+use App\Notifications\OrderFullyCompleted;
 use Illuminate\Http\Request;
+
 
 class OrderController extends Controller
 {
@@ -30,13 +36,23 @@ class OrderController extends Controller
             'orders' => 'required'
         ]);
 
-        $order = new Order();
-        $order->user_id = auth()->user()->id;
-        $order->save();
+        $user = new Order();
+        $user->user_id = auth()->user()->id;
+        $user->save();
 
-        $order->items()->sync($request->orders);
+        $user->items()->sync($request->orders);
 
-        return redirect()->route('employee.index')->withOrder($order);
+        // Now this is for sending the notification
+        // $orderitem = Order::all();
+
+        // Notification::send($orderitem, new MakeOrder($order));
+        Notification::route('mail', 'masternullisbackagain@gmail.com')->notify(new OrderCompleted($user));
+        // $user = User::find();
+        // User::find()->notify(new MakeOrder);
+
+        $notification = array('message'=>'Order Made Successfully Edited!', 'alert-type'=>'info');   
+
+        return redirect()->route('employee.index')->withOrder($user)->with($notification);
     }
 
     /**
@@ -51,7 +67,12 @@ class OrderController extends Controller
         $order->save();
 
         $orders = Order::whereDate('created_at', date('Y-m-d'))->where('status', 0)->paginate(15);
-        return view('chef.index', compact('orders'));
+
+        Notification::route('mail', 'masternullisbackagain@gmail.com')->notify(new OrderFullyCompleted($order));
+        $notification = array('message'=>'Order Completed Successfully!', 'alert-type'=>'success');
+
+
+        return view('chef.index', compact('orders'))->with($notification);
     }
 
     /**

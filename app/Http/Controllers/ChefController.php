@@ -10,6 +10,10 @@ use App\Http\Controllers\Controller;
 
 class ChefController extends Controller
 {
+
+    public function getprofile(){
+        return view('chef.profile');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -69,6 +73,8 @@ class ChefController extends Controller
         $user = User::findOrFail($id);
 
         return view('admin.users.show', compact('user'));
+
+        return view('chef.profile');
     }
 
     /**
