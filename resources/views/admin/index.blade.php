@@ -37,6 +37,7 @@
             <tr>
                 <th>Item</th>
                 <th>Category</th>
+                <th>Date</th>
             </tr>
              @foreach($menu as $m)
              @foreach($m->items as $item)
@@ -45,11 +46,19 @@
                 <td>
                     {{ $item->category->name }}
                 </td>
-                
+                <td>{{ $item->created_at }}</td>
             </tr>
             @endforeach
             @endforeach
         </table>
     </div>
+
+           
+
+
+
+
 </div>
 @endsection
+
+

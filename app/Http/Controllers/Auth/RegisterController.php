@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Auth\Role;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -69,7 +70,17 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'status' => 0
         ]);
+
+        $verification = new \App\Verification();
+        $verification->user_id = $user->id;
+        $verification->token = str_random(25);
+        $verification->save();
+
+        // Here is the code for mail
+        $user->sendVerificationEmail($verification->token);
+
         $user->attachRole('employee');
 
         return $user;

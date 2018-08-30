@@ -19,6 +19,12 @@
           Chefs
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{ (\Request::route()->getName() == 'admin.searchmenu') ? 'active' : '' }}" href="{{ route('admin.searchmenu') }}"> 
+          <i class="fa fa-search"></i>
+          Last Day Menu
+        </a>
+      </li>
     </ul>
 
   </div>

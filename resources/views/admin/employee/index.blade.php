@@ -16,6 +16,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
         @foreach($employees as $employee)
@@ -23,6 +24,9 @@
             <td>{{ $employee->id }}</td>
             <td>{{ $employee->name }}</td>
             <td>{{ $employee->email }}</td>
+            
+            <td>{{ auth()->user()->status ? 'Verified' : 'Not Verified' }}</td>
+            
             <td>
                 <form id="submitForm-{{ $employee->id }}" method="post" action="{{ url('admin/employee/destroy/'.$employee->id) }}" >
                     @csrf

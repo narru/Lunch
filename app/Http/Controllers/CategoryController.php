@@ -43,7 +43,9 @@ class CategoryController extends Controller
 
         $category = Category::create($data);
 
-        return redirect()->route('category.index')->with('flash_message', 'Category Added Successfully!');
+        $notification = array('message'=>'New Category Added!', 'alert-type'=>'success');
+
+        return redirect()->route('category.index')->with($notification);
     }
 
     /**
@@ -89,7 +91,9 @@ class CategoryController extends Controller
         }
         $category->save();
 
-        return redirect()->route('category.show', $category->id);
+        $notification = array('message'=>'Category Updated!', 'alert-type'=>'success');
+
+        return redirect()->route('category.show', $category->id)->with($notification);
     }
 
     /**
@@ -102,6 +106,9 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-        return redirect()->route('category.index');
+
+        $notification = array('message'=>'Sorry The category is Deleted!', 'alert-type'=>'error');
+
+        return redirect()->route('category.index')->with($notification);
     }
 }

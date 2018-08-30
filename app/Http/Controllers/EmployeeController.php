@@ -124,6 +124,7 @@ class EmployeeController extends Controller
         public function destroy($id)
         {
             User::destroy($id);
-            return back()->with('flash_message', 'User deleted!');
+            $notification = array('message'=>'Employee Profile Updated Successfully!', 'alert-type'=>'success');
+            return back()->with($notification);
         }
     }

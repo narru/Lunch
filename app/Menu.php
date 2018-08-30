@@ -10,4 +10,6 @@ class Menu extends Model
     {
         return $this->belongsToMany('App\Item', 'menus_items');
     }
+  	
+   
 }

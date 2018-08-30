@@ -10,4 +10,11 @@ class Item extends Model
     {
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
+
+    public function menus()
+    {
+    	return $this->hasOne('App\Menu', 'id', 'category_id');
+    }
+  	
+  	
 }

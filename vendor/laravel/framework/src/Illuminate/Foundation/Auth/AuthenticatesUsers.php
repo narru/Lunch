@@ -2,11 +2,12 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-trait AuthenticatesUsers
+trait  AuthenticatesUsers
 {
     use RedirectsUsers, ThrottlesLogins;
 
@@ -99,6 +100,14 @@ trait AuthenticatesUsers
      */
     protected function sendLoginResponse(Request $request)
     {
+        if($this->guard()->user()->token != null || $this->guard()->user()->token != 0 )
+        {
+               $this->guard()->logout();
+
+            $request->session()->invalidate();
+            $message = 'Please verify your account!';
+            return view('welcome', compact('message'));
+        }
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
@@ -179,4 +188,5 @@ trait AuthenticatesUsers
     {
         return Auth::guard();
     }
+
 }

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\Order;
 use App\Menu;
-use App\User;
+use App\User; 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -26,7 +27,7 @@ class AdminController extends Controller
         return view('admin.chef.index', compact('chefs'));
     }
 
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -34,7 +35,8 @@ class AdminController extends Controller
     public function index()
     {
         $orders = Order::paginate(5);
-        $menu = Menu::with('items')->get();
+        // Here menu is showing only todays with the items
+        $menu = Menu::with('items')->whereDate('created_at', '>=', Carbon::today())->get();
         return view('admin.index', compact('orders','menu'));
     }
 

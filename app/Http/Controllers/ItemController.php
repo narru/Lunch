@@ -115,6 +115,7 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($id);
         $item->delete();
-        return redirect()->route("item.index");
+        $notification = array('message'=>'Opps Item Deleted!', 'alert-type'=>'error');
+        return redirect()->route("item.index")->with($notification);
     }
 }

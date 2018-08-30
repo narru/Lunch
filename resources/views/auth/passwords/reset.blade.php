@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.navapp')
 
 @section('content')
 <div class="container">

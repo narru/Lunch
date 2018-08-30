@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Order;
 use App\Http\Requests;
+use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,9 +22,9 @@ class ChefController extends Controller
      * @return \Illuminate\View\View
      */
     public function index(Request $request)
-    {
-        $orders = Order::whereDate('created_at', date('Y-m-d'))->where('status', 0)->paginate(15);
-        return view('chef.index', compact('orders'));
+    {   
+        $orders = Order::whereDate('created_at', date('Y-m-d'))->where('status', 0)->get();
+        return view('chef.index', compact('orders'));  
     }
  
     /**
@@ -57,8 +59,8 @@ class ChefController extends Controller
         $chef->save();
         $chef->attachRole('chef');
 
-
-        return redirect()->route('admin.chefs.index')->with('flash_message', 'Chef added!');
+        $notification = array('message'=>'Chef Added Successfully!', 'alert-type'=>'success');
+        return redirect()->route('admin.chefs.index')->with($notification);
     }
 
     /**

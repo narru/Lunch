@@ -33,9 +33,10 @@
                         <div class="card-header text-center h4 text-teal" style="background-color: white;">{{ __('Lunch Hour Management') }}</div>
 
                         <div class="card-body">
-
-                        
-
+                       
+                            @if(isset($message))
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @endif
 
                             <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                                 @csrf

@@ -15,7 +15,7 @@
                     @include ('chef.category.form', ['formMode' => 'create'])
 
                 </form>
-
+ 
             </div>
         </div>
     </div>

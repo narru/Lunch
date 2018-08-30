@@ -39,7 +39,6 @@ class OrderController extends Controller
         $user = new Order();
         $user->user_id = auth()->user()->id;
         $user->save();
-
         $user->items()->sync($request->orders);
 
         // Now this is for sending the notification
@@ -49,9 +48,7 @@ class OrderController extends Controller
         Notification::route('mail', 'masternullisbackagain@gmail.com')->notify(new OrderCompleted($user));
         // $user = User::find();
         // User::find()->notify(new MakeOrder);
-
-        $notification = array('message'=>'Order Made Successfully Edited!', 'alert-type'=>'info');   
-
+        $notification = array('message'=>'Order Made Successfully!', 'alert-type'=>'info');   
         return redirect()->route('employee.index')->withOrder($user)->with($notification);
     }
 
@@ -60,19 +57,22 @@ class OrderController extends Controller
      *
      * @param  int  $id
      */
+
+    public function comp()
+    {
+        $orders = Order::whereDate('created_at', date('Y-m-d'))->where('status', 0)->paginate(15);
+        
+        return view('chef.index', compact('orders'));
+    }
     public function complete($id)
     {
         $order = Order::findOrFail($id);
         $order->status = 1;
-        $order->save();
-
-        $orders = Order::whereDate('created_at', date('Y-m-d'))->where('status', 0)->paginate(15);
-
-        Notification::route('mail', 'masternullisbackagain@gmail.com')->notify(new OrderFullyCompleted($order));
-        $notification = array('message'=>'Order Completed Successfully!', 'alert-type'=>'success');
-
-
-        return view('chef.index', compact('orders'))->with($notification);
+        if($order->save()){
+            Notification::route('mail', 'masternullisbackagain@gmail.com')->notify(new OrderFullyCompleted($order));
+            $notification = array('message'=>'Order Completed Successfully!', 'alert-type'=>'success');
+            return redirect()->route('order-comp')->with($notification);
+        }
     }
 
     /**
@@ -104,7 +104,6 @@ class OrderController extends Controller
         ]);
         $order = Order::findOrFail($id);
         $order->items()->sync($request->orders);
-
         return redirect()->route('employee.index');
     }
 
